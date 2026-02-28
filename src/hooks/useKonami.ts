@@ -8,7 +8,8 @@ const KONAMI = [
 
 /**
  * Listens for the Konami Code and calls the callback when completed.
- * The sequence resets after 2 seconds of inactivity.
+ * Uses capture phase so arrow keys are tracked even when other handlers
+ * call preventDefault(). The sequence resets after 2 seconds of inactivity.
  */
 export function useKonami(onActivate: () => void) {
   let pos = 0
@@ -30,11 +31,11 @@ export function useKonami(onActivate: () => void) {
   }
 
   onMount(() => {
-    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('keydown', handleKeyDown, true)
   })
 
   onCleanup(() => {
-    window.removeEventListener('keydown', handleKeyDown)
+    window.removeEventListener('keydown', handleKeyDown, true)
     clearTimeout(timer)
   })
 }
