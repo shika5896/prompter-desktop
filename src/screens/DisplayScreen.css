@@ -33,3 +33,13 @@
   color: var(--display-text);
   border-color: var(--display-border-hover);
 }
+
+/* Easter egg */
+.display-screen.barrel-roll {
+  animation: barrel-roll 1s ease-in-out;
+}
+
+@keyframes barrel-roll {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

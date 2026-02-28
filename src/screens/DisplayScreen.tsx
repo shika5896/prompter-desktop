@@ -1,4 +1,4 @@
-import { onMount, Show, createMemo } from 'solid-js'
+import { onMount, Show, createMemo, createSignal } from 'solid-js'
 import { useNavigate } from '@solidjs/router'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import { useI18n } from '../i18n'
@@ -6,6 +6,7 @@ import manuscriptStore from '../stores/manuscriptStore'
 import displayStore from '../stores/displayStore'
 import { useKeyBinding } from '../hooks/useKeyBinding'
 import { useWheelNavigation } from '../hooks/useWheelNavigation'
+import { useKonami } from '../hooks/useKonami'
 import SlideRenderer from '../components/display/SlideRenderer'
 import SlideIndicator from '../components/display/SlideIndicator'
 import DisplayContainer from '../components/display/DisplayContainer'
@@ -55,8 +56,16 @@ export default function DisplayScreen() {
     onPrev: () => displayStore.prev(),
   })
 
+  const [barrelRoll, setBarrelRoll] = createSignal(false)
+
+  useKonami(() => {
+    if (barrelRoll()) return
+    setBarrelRoll(true)
+    setTimeout(() => setBarrelRoll(false), 1000)
+  })
+
   return (
-    <div class="display-screen">
+    <div class="display-screen" classList={{ 'barrel-roll': barrelRoll() }}>
       <Show when={!displayStore.isFullscreen()}>
         <div class="display-topbar">
           <button class="display-back" onClick={() => navigate('/')}>
