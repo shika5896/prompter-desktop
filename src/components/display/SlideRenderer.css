@@ -1,0 +1,25 @@
+.slide-renderer {
+  line-height: 2.5;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.slide-renderer ruby {
+  position: relative;
+  display: inline;
+}
+
+.slide-renderer ruby rp {
+  display: none;
+}
+
+.slide-renderer ruby rt {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  line-height: 1.2;
+  pointer-events: none;
+  text-align: center;
+}

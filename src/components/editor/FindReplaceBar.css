@@ -1,0 +1,37 @@
+.find-replace-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.find-replace-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.find-input {
+  flex: 1;
+  max-width: 300px;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--font-sm);
+}
+
+.find-result-count {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  min-width: 60px;
+}
+
+.find-close {
+  font-size: var(--font-md);
+  color: var(--text-muted);
+  padding: 0 var(--space-xs);
+  margin-left: auto;
+}
+.find-close:hover {
+  color: var(--text-primary);
+}

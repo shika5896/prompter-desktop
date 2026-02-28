@@ -1,0 +1,35 @@
+.confirm-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.confirm-content {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+  padding: var(--space-lg);
+  min-width: 320px;
+  max-width: 480px;
+}
+
+.confirm-title {
+  font-size: var(--font-lg);
+  margin-bottom: var(--space-md);
+}
+
+.confirm-message {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}

@@ -1,0 +1,44 @@
+.slide-editor {
+  flex: 1;
+  padding: var(--space-lg);
+  overflow-y: auto;
+  outline: none;
+  line-height: 2.5;
+  min-height: 200px;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+.slide-editor:focus {
+  background: var(--bg-surface);
+}
+
+.slide-editor [data-type="ruby"] {
+  cursor: pointer;
+  border-bottom: 2px dashed var(--accent);
+  position: relative;
+  display: inline;
+}
+
+.slide-editor [data-type="ruby"]:hover {
+  background: rgba(74, 158, 255, 0.15);
+}
+
+/* Hide fallback parentheses */
+.slide-editor [data-type="ruby"] rp {
+  display: none;
+}
+
+/* Position ruby reading above base text without affecting layout */
+.slide-editor [data-type="ruby"] rt {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.5em;
+  color: inherit;
+  white-space: nowrap;
+  line-height: 1.2;
+  pointer-events: none;
+  text-align: center;
+}

@@ -1,0 +1,32 @@
+.key-assign-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.key-assign-prompt {
+  color: var(--text-secondary);
+}
+
+.key-assign-display {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+  padding: var(--space-lg) var(--space-xl);
+  background: var(--bg-primary);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  min-width: 120px;
+  text-align: center;
+}
+
+.key-assign-reserved {
+  color: var(--danger);
+  font-size: var(--font-sm);
+  margin: 0;
+}
+
+.key-assign-actions {
+  display: flex;
+  gap: var(--space-sm);
+}

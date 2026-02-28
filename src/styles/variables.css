@@ -1,0 +1,37 @@
+:root {
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Font sizes */
+  --font-xs: 12px;
+  --font-sm: 14px;
+  --font-md: 16px;
+  --font-lg: 20px;
+  --font-xl: 24px;
+  --font-2xl: 32px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+
+  /* Sidebar */
+  --sidebar-width: 240px;
+  --toolbar-height: 48px;
+
+  /* Display / teleprompter (always dark) */
+  --display-bg: #000;
+  --display-text: #fff;
+  --display-text-muted: #aaa;
+  --display-border: #444;
+  --display-border-hover: #666;
+}

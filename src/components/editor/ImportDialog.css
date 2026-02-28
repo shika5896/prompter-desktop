@@ -1,0 +1,31 @@
+.import-dialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.import-dialog-field label {
+  display: block;
+  margin-bottom: var(--space-xs);
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+}
+
+.import-dialog-field input {
+  width: 100%;
+}
+
+.import-dialog-preview {
+  text-align: center;
+  padding: var(--space-md);
+  background: var(--bg-primary);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-md);
+  color: var(--text-secondary);
+}
+
+.import-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}

@@ -1,0 +1,27 @@
+.color-picker label {
+  display: block;
+  margin-bottom: var(--space-xs);
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+}
+
+.color-picker-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.color-picker input[type="color"] {
+  width: 36px;
+  height: 36px;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  background: none;
+}
+
+.color-text-input {
+  width: 90px;
+  font-family: monospace;
+}
