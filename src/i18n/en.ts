@@ -40,6 +40,8 @@ export const en = {
   edit_find_no_results: 'No results',
   edit_auto_furigana: 'Auto Furigana',
   edit_auto_furigana_all: 'Auto Furigana (All)',
+  edit_file_menu: 'File',
+  edit_ruby_menu: 'Ruby',
   edit_manuscript_title: 'Manuscript Title',
   edit_display: 'Display',
   edit_settings: 'Settings',

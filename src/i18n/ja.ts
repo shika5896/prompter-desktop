@@ -40,6 +40,8 @@ export const ja = {
   edit_find_no_results: '見つかりません',
   edit_auto_furigana: '自動振り仮名',
   edit_auto_furigana_all: '全スライド自動振り仮名',
+  edit_file_menu: 'ファイル',
+  edit_ruby_menu: '振り仮名',
   edit_manuscript_title: '原稿タイトル',
   edit_display: '表示',
   edit_settings: '設定',

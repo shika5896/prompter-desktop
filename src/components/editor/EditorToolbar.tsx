@@ -2,6 +2,7 @@ import { useI18n } from '../../i18n'
 import manuscriptStore from '../../stores/manuscriptStore'
 import settingsStore from '../../stores/settingsStore'
 import Button from '../common/Button'
+import DropdownMenu from '../common/DropdownMenu'
 import NumberInput from '../common/NumberInput'
 import ColorPicker from '../common/ColorPicker'
 import './EditorToolbar.css'
@@ -29,15 +30,14 @@ export default function EditorToolbar(props: EditorToolbarProps) {
   return (
     <div class="editor-toolbar">
       <div class="toolbar-group">
-        <Button size="sm" variant="ghost" onClick={props.onLoad} title="Ctrl+O">
-          {t('edit_load')}
-        </Button>
-        <Button size="sm" variant="ghost" onClick={props.onSave} title="Ctrl+S">
-          {t('edit_save')}
-        </Button>
-        <Button size="sm" variant="ghost" onClick={props.onImport}>
-          {t('edit_import')}
-        </Button>
+        <DropdownMenu
+          label={t('edit_file_menu')}
+          items={[
+            { label: t('edit_load'), shortcut: 'Ctrl+O', onClick: props.onLoad },
+            { label: t('edit_save'), shortcut: 'Ctrl+S', onClick: props.onSave },
+            { label: t('edit_import'), onClick: props.onImport },
+          ]}
+        />
       </div>
 
       <div class="toolbar-separator" />
@@ -83,18 +83,15 @@ export default function EditorToolbar(props: EditorToolbarProps) {
       <div class="toolbar-separator" />
 
       <div class="toolbar-group">
-        <Button size="sm" variant="ghost" onClick={props.onAddRuby}>
-          {t('edit_add_ruby')}
-        </Button>
-        <Button size="sm" variant="ghost" onClick={props.onRemoveRuby}>
-          {t('edit_remove_ruby')}
-        </Button>
-        <Button size="sm" variant="ghost" onClick={props.onAutoFurigana}>
-          {t('edit_auto_furigana')}
-        </Button>
-        <Button size="sm" variant="ghost" onClick={props.onAutoFuriganaAll}>
-          {t('edit_auto_furigana_all')}
-        </Button>
+        <DropdownMenu
+          label={t('edit_ruby_menu')}
+          items={[
+            { label: t('edit_add_ruby'), onClick: props.onAddRuby },
+            { label: t('edit_remove_ruby'), onClick: props.onRemoveRuby },
+            { label: t('edit_auto_furigana'), onClick: props.onAutoFurigana },
+            { label: t('edit_auto_furigana_all'), onClick: props.onAutoFuriganaAll },
+          ]}
+        />
       </div>
 
       <div class="toolbar-separator" />
