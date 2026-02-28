@@ -65,6 +65,9 @@ input, select {
   border-radius: var(--radius-sm);
   padding: var(--space-sm) var(--space-md);
 }
+input, textarea {
+  user-select: text;
+}
 input:focus, select:focus {
   border-color: var(--border-focus);
   outline: none;

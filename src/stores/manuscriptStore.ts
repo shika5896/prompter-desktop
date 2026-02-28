@@ -145,10 +145,13 @@ function createManuscriptStore() {
   function removeSlide(index: number) {
     if (manuscript.slides.length <= 1) return
     pushUndo()
+    const viewingIdx = currentSlideIndex()
     setManuscript(produce(m => {
       m.slides.splice(index, 1)
     }))
-    if (currentSlideIndex() >= manuscript.slides.length) {
+    if (viewingIdx > index) {
+      setCurrentSlideIndex(viewingIdx - 1)
+    } else if (viewingIdx >= manuscript.slides.length) {
       setCurrentSlideIndex(manuscript.slides.length - 1)
     }
     setIsDirty(true)

@@ -17,7 +17,8 @@
   white-space: nowrap;
 }
 
-.dropdown-trigger:hover {
+.dropdown-trigger:hover,
+.dropdown-trigger.active {
   background: var(--bg-hover);
 }
 
@@ -34,7 +35,7 @@
   min-width: 180px;
   margin-top: 2px;
   padding: var(--space-xs) 0;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--bg-secondary);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);

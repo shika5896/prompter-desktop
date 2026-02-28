@@ -5,6 +5,7 @@
   overflow: hidden;
 }
 
+/* Header */
 .settings-header {
   display: flex;
   align-items: center;
@@ -16,36 +17,64 @@
 
 .settings-header h1 {
   font-size: var(--font-xl);
+  font-weight: 600;
 }
 
 .settings-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
   color: var(--accent);
   text-decoration: none;
   font-size: var(--font-sm);
+  font-weight: 500;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast);
 }
 .settings-back-link:hover {
-  text-decoration: underline;
+  background: var(--bg-hover);
 }
 
+/* Body */
 .settings-body {
   flex: 1;
   overflow-y: auto;
   padding: var(--space-lg) var(--space-xl);
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--space-md);
   max-width: 640px;
 }
 
-.settings-section h2 {
-  font-size: var(--font-lg);
-  margin-bottom: var(--space-md);
-  padding-bottom: var(--space-xs);
-  border-bottom: 1px solid var(--border);
+/* Card sections */
+.settings-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
 }
 
+.settings-card h2 {
+  font-size: var(--font-md);
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  color: var(--text-primary);
+}
+
+.settings-divider {
+  height: 1px;
+  background: var(--border);
+  margin: var(--space-sm) 0;
+}
+
+/* Fields */
 .settings-field {
   margin-bottom: var(--space-md);
+}
+
+.settings-field:last-child {
+  margin-bottom: 0;
 }
 
 .settings-field > label {
@@ -53,6 +82,7 @@
   margin-bottom: var(--space-xs);
   font-size: var(--font-sm);
   color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .settings-field input[type="text"],
@@ -61,20 +91,32 @@
   max-width: 300px;
 }
 
-.settings-field-row label {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
+.settings-field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
   cursor: pointer;
 }
 
-.settings-field-row input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--accent);
+/* Field row (side-by-side) */
+.settings-field-row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-sm);
 }
 
+.settings-resolution-separator {
+  align-self: flex-end;
+  padding-bottom: 6px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Footer */
 .settings-footer {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-md);
@@ -83,23 +125,35 @@
   background: var(--bg-secondary);
 }
 
-.settings-saved-msg {
+/* Toast notification */
+.settings-toast {
+  font-size: var(--font-sm);
+  font-weight: 500;
   color: var(--accent);
-  font-size: var(--font-sm);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+  pointer-events: none;
 }
 
-.settings-error-msg {
+.settings-toast.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.settings-toast-error {
   color: var(--danger);
-  font-size: var(--font-sm);
 }
 
-.number-input label {
+/* NumberInput inside settings */
+.settings-card .number-input label {
   display: block;
   margin-bottom: var(--space-xs);
   font-size: var(--font-sm);
   color: var(--text-secondary);
+  font-weight: 500;
 }
 
-.number-input input[type="number"] {
+.settings-card .number-input input[type="number"] {
   width: 100px;
 }

@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n'
 import './SlideIndicator.css'
 
 interface SlideIndicatorProps {
@@ -6,9 +7,10 @@ interface SlideIndicatorProps {
 }
 
 export default function SlideIndicator(props: SlideIndicatorProps) {
+  const t = useI18n()
   return (
     <div class="slide-indicator">
-      {props.current + 1} / {props.total}
+      {t('display_slide')} {props.current + 1} / {props.total}
     </div>
   )
 }

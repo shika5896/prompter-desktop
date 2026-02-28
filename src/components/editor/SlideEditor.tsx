@@ -338,6 +338,17 @@ export default function SlideEditor(props: SlideEditorProps) {
 
   // ── Model → DOM sync (reactive) ──
 
+  // Clear undo debounce timer when switching slides
+  createEffect(on(
+    () => idx(),
+    () => {
+      if (undoTimer) {
+        clearTimeout(undoTimer)
+        undoTimer = null
+      }
+    }
+  ))
+
   createEffect(on(
     () => [idx(), slide()?.segments],
     () => {

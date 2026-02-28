@@ -1,10 +1,60 @@
+.editor-toolbar-wrap {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+/* Title row */
+.editor-toolbar-title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md) 0;
+}
+
+.toolbar-title-input {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: var(--space-xs) var(--space-xs);
+  transition: border-color var(--transition-fast);
+}
+
+.toolbar-title-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.toolbar-title-input:focus {
+  border-bottom-color: var(--border-focus);
+  outline: none;
+}
+
+.toolbar-dirty-indicator {
+  color: var(--accent);
+  font-size: var(--font-md);
+  flex-shrink: 0;
+}
+
+.toolbar-error-msg {
+  color: var(--danger);
+  font-size: var(--font-xs);
+  padding: var(--space-xs) var(--space-sm);
+  background: rgba(255, 74, 106, 0.1);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+/* Toolbar buttons row */
 .editor-toolbar {
   display: flex;
   align-items: flex-end;
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-secondary);
   min-height: var(--toolbar-height);
   flex-wrap: wrap;
 }

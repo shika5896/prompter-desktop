@@ -1,4 +1,4 @@
-import { createSignal, createMemo, Show } from 'solid-js'
+import { createSignal, createMemo, onCleanup, Show } from 'solid-js'
 import { useI18n } from '../../i18n'
 import Button from '../common/Button'
 import './KeyAssignDialog.css'
@@ -39,6 +39,8 @@ export default function KeyAssignDialog(props: KeyAssignDialogProps) {
       listenerRef = null
     }
   }
+
+  onCleanup(stopCapture)
 
   function handleClose() {
     stopCapture()

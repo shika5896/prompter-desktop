@@ -4,6 +4,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-xl);
+  overflow: hidden;
   background: var(--display-bg);
+}
+
+.display-virtual-canvas {
+  transform-origin: center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  flex-shrink: 0;
 }

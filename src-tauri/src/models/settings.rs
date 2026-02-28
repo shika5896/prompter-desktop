@@ -30,6 +30,18 @@ pub struct GeneralSettings {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DisplaySettings {
     pub mirror: bool,
+    #[serde(default = "default_resolution_width")]
+    pub resolution_width: u32,
+    #[serde(default = "default_resolution_height")]
+    pub resolution_height: u32,
+}
+
+fn default_resolution_width() -> u32 {
+    1920
+}
+
+fn default_resolution_height() -> u32 {
+    1080
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -63,6 +75,8 @@ impl Default for AppSettings {
             },
             display: DisplaySettings {
                 mirror: true,
+                resolution_width: 1920,
+                resolution_height: 1080,
             },
         }
     }

@@ -21,6 +21,8 @@ export interface GeneralSettings {
 
 export interface DisplaySettings {
   mirror: boolean
+  resolution_width: number
+  resolution_height: number
 }
 
 export interface AppSettings {
@@ -51,5 +53,7 @@ export const defaultSettings: AppSettings = {
   },
   display: {
     mirror: true,
+    resolution_width: 1920,
+    resolution_height: 1080,
   },
 }

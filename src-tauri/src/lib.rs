@@ -12,6 +12,7 @@ pub fn run() {
             commands::settings::load_settings,
             commands::settings::save_settings,
             commands::furigana::auto_furigana,
+            commands::fonts::list_system_fonts,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

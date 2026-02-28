@@ -7,6 +7,7 @@
   min-height: 200px;
   word-break: break-all;
   white-space: pre-wrap;
+  user-select: text;
 }
 
 .slide-editor:focus {

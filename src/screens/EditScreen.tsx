@@ -16,7 +16,7 @@ import RubyDialog from '../components/editor/RubyDialog'
 import KeyAssignDialog from '../components/editor/KeyAssignDialog'
 import ImportDialog from '../components/editor/ImportDialog'
 import FindReplaceBar from '../components/editor/FindReplaceBar'
-import PreviewPanel from '../components/editor/PreviewPanel'
+import PreviewModal from '../components/editor/PreviewModal'
 import ConfirmDialog from '../components/common/ConfirmDialog'
 import './EditScreen.css'
 
@@ -46,6 +46,8 @@ export default function EditScreen() {
 
   // Keyboard shortcuts
   function handleKeyDown(e: KeyboardEvent) {
+    // Let input/textarea handle their own undo/redo
+    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
     if (e.ctrlKey || e.metaKey) {
       switch (e.key.toLowerCase()) {
         case 's':
@@ -58,7 +60,11 @@ export default function EditScreen() {
           break
         case 'z':
           e.preventDefault()
-          manuscriptStore.undo()
+          if (e.shiftKey) {
+            manuscriptStore.redo()
+          } else {
+            manuscriptStore.undo()
+          }
           break
         case 'y':
           e.preventDefault()
@@ -101,7 +107,9 @@ export default function EditScreen() {
     const lastPath = settingsStore.settings.general.last_file_path
     if (settingsStore.settings.general.auto_open_last_file && lastPath && !manuscriptStore.filePath()) {
       manuscriptStore.load(lastPath).catch(() => {
-        // File not found or unreadable — silently ignore
+        // File not found or unreadable — clear stale path
+        settingsStore.setLastFilePath(null)
+        settingsStore.save().catch(() => {})
       })
     }
 
@@ -169,22 +177,35 @@ export default function EditScreen() {
 
   // ── Import ──
 
+  let pendingImportPath: string | null = null
+
   async function handleImportText() {
     const path = await open({
       multiple: false,
       filters: [{ name: 'Text', extensions: ['txt'] }],
     })
     if (path) {
-      try {
-        const text = await readTextFile(path as string)
-        // Extract filename without extension
-        const name = (path as string).replace(/\\/g, '/').split('/').pop()?.replace(/\.txt$/i, '') || ''
-        setImportText(text)
-        setImportFileName(name)
-        setShowImportDialog(true)
-      } catch (e) {
-        showError(String(e))
+      if (manuscriptStore.isDirty()) {
+        pendingImportPath = path as string
+        pendingCloseWindow = false
+        pendingNewManuscript = false
+        setShowConfirmLeave(true)
+      } else {
+        await openImportDialog(path as string)
       }
+    }
+  }
+
+  async function openImportDialog(path: string) {
+    try {
+      const text = await readTextFile(path)
+      // Extract filename without extension
+      const name = path.replace(/\\/g, '/').split('/').pop()?.replace(/\.txt$/i, '') || ''
+      setImportText(text)
+      setImportFileName(name)
+      setShowImportDialog(true)
+    } catch (e) {
+      showError(String(e))
     }
   }
 
@@ -222,13 +243,14 @@ export default function EditScreen() {
     const slides = manuscriptStore.manuscript.slides
     if (slides.length === 0) return
     try {
+      manuscriptStore.snapshotForUndo()
       for (let i = 0; i < slides.length; i++) {
         const text = slides[i].segments
           .map(seg => seg.type === 'text' ? seg.content : seg.base)
           .join('')
         if (!text.trim()) continue
         const segments = await autoFurigana(text)
-        manuscriptStore.updateSegments(i, segments)
+        manuscriptStore.updateSegmentsSilent(i, segments)
       }
     } catch (e) {
       showError(String(e))
@@ -343,7 +365,7 @@ export default function EditScreen() {
     setShowKeyDialog(false)
   }
 
-  // ── Navigation guard ──
+  // ── Navigation guard (window close only) ──
 
   let pendingCloseWindow = false
   let pendingNewManuscript = false
@@ -356,24 +378,20 @@ export default function EditScreen() {
     } else if (pendingNewManuscript) {
       pendingNewManuscript = false
       manuscriptStore.newManuscript()
+    } else if (pendingImportPath) {
+      const path = pendingImportPath
+      pendingImportPath = null
+      openImportDialog(path)
     }
   }
 
   return (
     <div class="edit-screen">
-      <div class="edit-header">
-        <input
-          class="edit-title-input"
-          type="text"
-          placeholder={t('edit_manuscript_title')}
-          value={manuscriptStore.manuscript.title}
-          onInput={e => manuscriptStore.setTitle(e.currentTarget.value)}
-        />
-        {manuscriptStore.isDirty() && <span class="edit-dirty-indicator">●</span>}
-        {errorMsg() && <span class="edit-error-msg">{errorMsg()}</span>}
-      </div>
-
       <EditorToolbar
+        title={manuscriptStore.manuscript.title}
+        onTitleChange={v => manuscriptStore.setTitle(v)}
+        isDirty={manuscriptStore.isDirty()}
+        errorMsg={errorMsg()}
         onAddRuby={handleAddRuby}
         onRemoveRuby={handleRemoveAllRuby}
         onAutoFurigana={handleAutoFurigana}
@@ -403,10 +421,9 @@ export default function EditScreen() {
             onRubyClick={handleRubyClick}
           />
         </div>
-        <Show when={showPreview()}>
-          <PreviewPanel />
-        </Show>
       </div>
+
+      <PreviewModal open={showPreview()} onClose={() => setShowPreview(false)} />
 
       <RubyDialog
         open={showRubyDialog()}

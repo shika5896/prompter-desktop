@@ -25,3 +25,7 @@ export async function saveSettings(settings: AppSettings): Promise<void> {
 export async function autoFurigana(text: string): Promise<Segment[]> {
   return invoke<Segment[]>('auto_furigana', { text })
 }
+
+export async function listSystemFonts(): Promise<string[]> {
+  return invoke<string[]>('list_system_fonts')
+}

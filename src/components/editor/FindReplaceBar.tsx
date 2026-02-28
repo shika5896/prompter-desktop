@@ -71,7 +71,7 @@ export default function FindReplaceBar(props: FindReplaceBarProps) {
       const slide = manuscriptStore.manuscript.slides[i]
       const { segments, replaced } = replaceInSegments(slide.segments, q, r, true)
       if (replaced) {
-        manuscriptStore.updateSegments(i, segments)
+        manuscriptStore.updateSegmentsSilent(i, segments)
         setResultCount(countMatches())
         return
       }
@@ -87,7 +87,7 @@ export default function FindReplaceBar(props: FindReplaceBarProps) {
       const slide = manuscriptStore.manuscript.slides[i]
       const { segments, replaced } = replaceInSegments(slide.segments, q, r, false)
       if (replaced) {
-        manuscriptStore.updateSegments(i, segments)
+        manuscriptStore.updateSegmentsSilent(i, segments)
       }
     }
     setResultCount(countMatches())

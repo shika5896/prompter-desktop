@@ -1,11 +1,12 @@
-import { createRoot } from 'solid-js'
+import { createRoot, createSignal } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import type { AppSettings } from '../types/settings'
 import { defaultSettings } from '../types/settings'
-import { loadSettings as loadSettingsCmd, saveSettings as saveSettingsCmd } from '../commands/tauri'
+import { loadSettings as loadSettingsCmd, saveSettings as saveSettingsCmd, listSystemFonts } from '../commands/tauri'
 
 function createSettingsStore() {
   const [settings, setSettings] = createStore<AppSettings>(structuredClone(defaultSettings))
+  const [systemFonts, setSystemFonts] = createSignal<string[]>([])
 
   function applyTheme(theme: 'dark' | 'light') {
     document.documentElement.setAttribute('data-theme', theme)
@@ -20,20 +21,19 @@ function createSettingsStore() {
       console.warn('Failed to load settings, using defaults:', e)
       applyTheme(settings.general.theme)
     }
+    // Load system fonts in background
+    listSystemFonts()
+      .then(fonts => setSystemFonts(fonts))
+      .catch(e => console.warn('Failed to list system fonts:', e))
   }
 
   async function save() {
     try {
-      await saveSettingsCmd(JSON.parse(JSON.stringify(settings)))
+      await saveSettingsCmd(structuredClone(settings))
     } catch (e) {
       console.error('Failed to save settings:', e)
       throw e
     }
-  }
-
-  function update(updater: (s: AppSettings) => Partial<AppSettings>) {
-    const changes = updater(settings)
-    setSettings(prev => ({ ...prev, ...changes }))
   }
 
   function setFontFamily(family: string) {
@@ -53,9 +53,6 @@ function createSettingsStore() {
   }
   function setRubyColor(color: string) {
     setSettings('ruby', 'default_color', color)
-  }
-  function setEncoding(encoding: string) {
-    setSettings('general', 'encoding', encoding)
   }
   function setLanguage(lang: 'ja' | 'en') {
     setSettings('general', 'language', lang)
@@ -78,25 +75,29 @@ function createSettingsStore() {
   function setMirror(mirror: boolean) {
     setSettings('display', 'mirror', mirror)
   }
+  function setResolution(width: number, height: number) {
+    setSettings('display', 'resolution_width', width)
+    setSettings('display', 'resolution_height', height)
+  }
 
   return {
     settings,
+    systemFonts,
     load,
     save,
-    update,
     setFontFamily,
     setFontSize,
     setFontColor,
     setRubyFamily,
     setRubySize,
     setRubyColor,
-    setEncoding,
     setLanguage,
     setTheme,
     setAutoOpenLastFile,
     setAutoSave,
     setLastFilePath,
     setMirror,
+    setResolution,
   }
 }
 

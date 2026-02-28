@@ -1,4 +1,4 @@
-import { createSignal, For, onCleanup, Show } from 'solid-js'
+import { createSignal, createEffect, For, onCleanup, Show } from 'solid-js'
 import './DropdownMenu.css'
 
 export interface MenuItem {
@@ -15,29 +15,47 @@ interface DropdownMenuProps {
 export default function DropdownMenu(props: DropdownMenuProps) {
   const [open, setOpen] = createSignal(false)
   let ref!: HTMLDivElement
+  let closeTimer: ReturnType<typeof setTimeout> | undefined
+
+  function show() {
+    clearTimeout(closeTimer)
+    setOpen(true)
+  }
+
+  function scheduleClose() {
+    clearTimeout(closeTimer)
+    closeTimer = setTimeout(() => setOpen(false), 150)
+  }
 
   function toggle() {
-    setOpen(!open())
+    if (open()) {
+      clearTimeout(closeTimer)
+      setOpen(false)
+    } else {
+      show()
+    }
   }
 
   function handleItemClick(item: MenuItem) {
     item.onClick()
+    clearTimeout(closeTimer)
     setOpen(false)
   }
 
   function handleClickOutside(e: MouseEvent) {
     if (ref && !ref.contains(e.target as Node)) {
+      clearTimeout(closeTimer)
       setOpen(false)
     }
   }
 
   function handleKeyDown(e: KeyboardEvent) {
     if (e.key === 'Escape') {
+      clearTimeout(closeTimer)
       setOpen(false)
     }
   }
 
-  // Listen globally when open
   const startListening = () => {
     document.addEventListener('mousedown', handleClickOutside)
     document.addEventListener('keydown', handleKeyDown)
@@ -47,23 +65,27 @@ export default function DropdownMenu(props: DropdownMenuProps) {
     document.removeEventListener('keydown', handleKeyDown)
   }
 
-  // Watch open state reactively
-  const originalToggle = toggle
-  function toggleAndListen() {
-    const wasOpen = open()
-    originalToggle()
-    if (!wasOpen) {
+  createEffect(() => {
+    if (open()) {
       startListening()
     } else {
       stopListening()
     }
-  }
+  })
 
-  onCleanup(stopListening)
+  onCleanup(() => {
+    clearTimeout(closeTimer)
+    stopListening()
+  })
 
   return (
-    <div class="dropdown" ref={ref}>
-      <button class="dropdown-trigger" onClick={toggleAndListen}>
+    <div
+      class="dropdown"
+      ref={ref}
+      onMouseEnter={show}
+      onMouseLeave={scheduleClose}
+    >
+      <button class="dropdown-trigger" classList={{ active: open() }} onClick={toggle}>
         {props.label}
         <span class="dropdown-arrow">▾</span>
       </button>

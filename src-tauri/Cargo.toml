@@ -22,3 +22,4 @@ tauri = { version = "2.10.0", features = [] }
 tauri-plugin-dialog = "2"
 toml = "0.8"
 lindera = { version = "2", features = ["embed-ipadic"] }
+font-kit = "0.14"
