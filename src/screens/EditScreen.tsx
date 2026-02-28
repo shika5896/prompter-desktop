@@ -32,7 +32,6 @@ export default function EditScreen() {
   const [showReplace, setShowReplace] = createSignal(false)
   const [importText, setImportText] = createSignal('')
   const [importFileName, setImportFileName] = createSignal('')
-  const [pendingNav, setPendingNav] = createSignal<string | null>(null)
   const [errorMsg, setErrorMsg] = createSignal<string | null>(null)
 
   // Ruby dialog state
@@ -93,7 +92,6 @@ export default function EditScreen() {
     getCurrentWindow().onCloseRequested(async (event) => {
       if (manuscriptStore.isDirty()) {
         event.preventDefault()
-        setPendingNav(null)
         setShowConfirmLeave(true)
         pendingCloseWindow = true
       }
@@ -129,7 +127,6 @@ export default function EditScreen() {
 
   function handleNew() {
     if (manuscriptStore.isDirty()) {
-      setPendingNav(null)
       pendingCloseWindow = false
       setShowConfirmLeave(true)
       // After confirm, create new manuscript
@@ -351,36 +348,20 @@ export default function EditScreen() {
   let pendingCloseWindow = false
   let pendingNewManuscript = false
 
-  function tryNavigate(path: string) {
-    if (manuscriptStore.isDirty()) {
-      setPendingNav(path)
-      pendingCloseWindow = false
-      pendingNewManuscript = false
-      setShowConfirmLeave(true)
-    } else {
-      navigate(path)
-    }
-  }
-
   function confirmLeave() {
-    const nav = pendingNav()
     setShowConfirmLeave(false)
-    setPendingNav(null)
     if (pendingCloseWindow) {
       pendingCloseWindow = false
       getCurrentWindow().destroy()
     } else if (pendingNewManuscript) {
       pendingNewManuscript = false
       manuscriptStore.newManuscript()
-    } else if (nav) {
-      navigate(nav)
     }
   }
 
   return (
     <div class="edit-screen">
       <div class="edit-header">
-        <button class="edit-back" onClick={() => tryNavigate('/')}>← {t('display_exit')}</button>
         <input
           class="edit-title-input"
           type="text"
@@ -402,6 +383,8 @@ export default function EditScreen() {
         onImport={handleImportText}
         onTogglePreview={() => setShowPreview(!showPreview())}
         onKeyAssign={handleKeyAssign}
+        onDisplay={() => navigate('/display')}
+        onSettings={() => navigate('/settings')}
         showPreview={showPreview()}
       />
 

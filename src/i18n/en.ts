@@ -1,10 +1,4 @@
 export const en = {
-  // Menu
-  menu_title: 'Prompter Desktop',
-  menu_edit: 'Edit',
-  menu_display: 'Display',
-  menu_settings: 'Settings',
-
   // Edit
   edit_title: 'Edit Manuscript',
   edit_add_slide: 'Add Slide',
@@ -47,6 +41,8 @@ export const en = {
   edit_auto_furigana: 'Auto Furigana',
   edit_auto_furigana_all: 'Auto Furigana (All)',
   edit_manuscript_title: 'Manuscript Title',
+  edit_display: 'Display',
+  edit_settings: 'Settings',
 
   // Display
   display_slide: 'Slide',

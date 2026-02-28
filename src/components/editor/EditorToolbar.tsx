@@ -16,6 +16,8 @@ interface EditorToolbarProps {
   onImport: () => void
   onTogglePreview: () => void
   onKeyAssign: () => void
+  onDisplay: () => void
+  onSettings: () => void
   showPreview: boolean
 }
 
@@ -107,6 +109,17 @@ export default function EditorToolbar(props: EditorToolbarProps) {
           onClick={props.onTogglePreview}
         >
           {t('edit_preview')}
+        </Button>
+      </div>
+
+      <div class="toolbar-separator" />
+
+      <div class="toolbar-group">
+        <Button size="sm" variant="ghost" onClick={props.onDisplay}>
+          {t('edit_display')}
+        </Button>
+        <Button size="sm" variant="ghost" onClick={props.onSettings}>
+          {t('edit_settings')}
         </Button>
       </div>
     </div>

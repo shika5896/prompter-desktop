@@ -1,10 +1,4 @@
 export const ja = {
-  // Menu
-  menu_title: 'Prompter Desktop',
-  menu_edit: '編集',
-  menu_display: '表示',
-  menu_settings: '設定',
-
   // Edit
   edit_title: '原稿編集',
   edit_add_slide: 'スライド追加',
@@ -47,6 +41,8 @@ export const ja = {
   edit_auto_furigana: '自動振り仮名',
   edit_auto_furigana_all: '全スライド自動振り仮名',
   edit_manuscript_title: '原稿タイトル',
+  edit_display: '表示',
+  edit_settings: '設定',
 
   // Display
   display_slide: 'スライド',
