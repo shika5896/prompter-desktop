@@ -6,7 +6,6 @@
   border-bottom: 1px solid var(--border);
   background: var(--bg-secondary);
   min-height: var(--toolbar-height);
-  overflow-x: auto;
   flex-wrap: wrap;
 }
 
